@@ -16,11 +16,11 @@ abstract class SimpleCache{
     protected $cache;
     
     
-    public function __construct($cacheExpiry = 30, $cacheFile = 'simple-cache/cache') {
+    public function __construct($cacheExpiry = 30, $cacheFile = 'cache') {
         
         //load properties
         $this->expiryInterval = $cacheExpiry;
-        $this->filePath = $cacheFile;
+        $this->filePath = __DIR__.'/'.$cacheFile;
         $this->loadCacheData();
         
     }
