@@ -1,7 +1,7 @@
 <?php
         
 //include our simple cache class
-include_once 'simple-cache/simple-cache.php';
+include_once 'simple-cache.php';
 
 //create the cache object, setting my_data as the live data function
 $cache= new SimpleCache('my_data');
