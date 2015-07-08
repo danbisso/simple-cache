@@ -20,16 +20,14 @@ class SimpleCache{
     /**
      * 
      * @param string $liveDataFunction The user-defined function 
-     * that returns the data to be cached (must be a serializable string). 
-     * Note: If not defined, this class assumes an OOP implementation and should be extended with 
-     * the getLiveData() method overridden.
+     * that returns the data to be cached (must return a serializable string).
      * @param int $cacheExpiry [optional] the timer (in seconds) during which live 
      * data will be served from the cache file instead. After this timer ends, and the cache expires, 
      * the next request will refresh the cache with live data and reset the timer. The default is 30 seconds.
      * @param string $cacheFile [optional] the file where the cache data will be stored. 
      * The default is 'cache' in the script directory.
      */
-    public function __construct($liveDataFunction = null, $cacheExpiry = 30, $cacheFile = 'cache') {
+    public function __construct($liveDataFunction, $cacheExpiry = 30, $cacheFile = 'cache') {
         
         //load properties
         $this->dataFunction = $liveDataFunction;
@@ -79,7 +77,7 @@ class SimpleCache{
     private function _cache(){
         
         //get the live data
-        $data = $this->getLiveData();
+        $data = $this->_getLiveData();
         
         //store the live data
         $cacheObject = $this->_storeData($data);
@@ -138,11 +136,10 @@ class SimpleCache{
     
     /**
      * Fetches the live data by calling your live data function (see the constructor's 
-     * $liveDataFunction parameter). Note: in the OOP implementation, this method must be 
-     * overridden with your live data fetching code.
+     * $liveDataFunction parameter).
      * @return string a serializable string containing the data.
      */
-    protected function getLiveData(){
+    private function _getLiveData(){
         
         if(!function_exists($this->dataFunction)){
             
